@@ -67,15 +67,13 @@
 									<li>
 										<span class="opener">{{ cat }}</span>
 										<ul>
-										<!-- {% assign mypages = site.pages | sort: "category" %} -->
-										{% for page in site.pages %}
-											{% if page.resource == true %}
+										{% assign mypages = site.pages | sort: "order" %}
+										{% for page in mypages %}
 											{% for pc in page.categories %}
 												{% if pc == cat %}
-													<li><a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a></li>
+													<li><a href="{{ site.baseurl }}{{ page.permalink }}">{{ page.title }}</a></li>
 												{% endif %}   <!-- cat-match-p -->
 											{% endfor %}  <!-- page-category -->
-											{% endif %}   <!-- resource-p -->
 										{% endfor %}  <!-- page -->
 										</ul> 
 									{% endfor %}
