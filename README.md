@@ -1,1 +1,1 @@
-# bigquery-guide.github.io
+# BigQuery Technical Guide 

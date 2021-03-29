@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>BigQuery Guide</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../../assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">=
+							<!-- Header -->
+                            <header id="header">
+                                <a href="index.html" class="logo"><strong>BigQuery</strong> Guide for Developers & Administrators</a>
+                                <ul class="icons">
+                                    <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                                    <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+                                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                    <li><a href="#" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                </ul>
+                            </header>
+                            <!-- <section id="banner">
+                                <div class="content"></div>
+                            </section> -->
+                            <div class="section">
+                                <!-- <h1>{{ title }}</h1> -->
+                                <p> {{ content }} </p>
+                            </div>
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+							<!-- Search -->
+								<section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section>
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Menu</h2>
+									</header>
+									<ul>
+                                        <!-- iterate through the pages to create side bar -->
+                                        {% for cat in site.category-list %}
+                                        <li>
+											<span class="opener">{{ cat }}</span>
+											<ul>
+                                            {% assign mypages = site.pages | sort: "order" %}
+                                            {% for page in mypages %}
+                                                {% for pc in page.categories %}
+                                                    {% if pc == cat %}
+                                                        <li><a href="{{ site.baseurl }}{{ page.permalink }}">{{ page.title }}</a></li>
+                                                    {% endif %}   <!-- cat-match-p -->
+                                                {% endfor %}  <!-- page-category -->
+                                            {% endfor %}  <!-- page -->
+                                            </ul> 
+                                        {% endfor %}
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Giving Feedback</h2>
+									</header>
+									<p>Have ideas for new modules? Want to propose changes? Or maybe you just want to tell us how awesome BigQuery is!</p>
+									<ul class="contact">
+										<li class="icon brands fa-github"><a href="#">Open a Github issue</a></li>
+                                        <li class="icon solid fa-envelope"><a href="#">Send us an email</a></li>                                    
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../../assets/js/jquery.min.js"></script>
+			<script src="../../assets/js/browser.min.js"></script>
+			<script src="../../assets/js/breakpoints.min.js"></script>
+			<script src="../../assets/js/util.js"></script>
+			<script src="../../assets/js/main.js"></script>
+
+	</body>
+</html>
