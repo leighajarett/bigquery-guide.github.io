@@ -4,31 +4,86 @@
 		<title>BigQuery Guide</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="../../assets/css/main.css" />
 	</head>
+
+	<!-- Get next and previous pages -->
+	<!-- {% for cat in site.category-list %}
+		{% assign mypages = site.pages | sort: "order" %}
+			{% for pg in mypages %}
+				{% for pc in pg.categories %}
+					{% if pc == cat and page.title == pg.title %}
+						{% assign my_id = site.order %}
+						{% assign prev_id = site.order | minus: 1 %}
+						{% assign next_id = site.order | plus: 1 %}
+					{% endif %}   
+				{% endfor %}  
+			{% endfor %}  
+	{% endfor %}
+	{% for cat in site.category-list %}
+		{% for pg in mypages %}
+			{% for pc in pg.categories %}
+				{% if pc == cat and pg.order == prev_id %}
+					{% assign prev_page = pg %}
+				{% elsif pc == cat and pg.order == next_id %}
+					{% assign next_page = pg %}
+				{% endif %}   
+			{% endfor %}  
+		{% endfor %}  
+	{% endfor %} -->
+
+
 	<body class="is-preload">
 		<!-- Wrapper -->
 			<div id="wrapper">
 				<!-- Main -->
 					<div id="main">
-						<div class="inner">=
+						<div class="inner">
 							<!-- Header -->
                             <header id="header">
-                                <a href="index.html" class="logo"><strong>BigQuery</strong> Guide for Developers & Administrators</a>
+                                <a href="{{ site.baseurl }}" class="logo">{{ site.name }}</a>
                                 <ul class="icons">
-                                    <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-                                    <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-                                    <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                                    <li><a href="#" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                                    <li><a href="{{ site.github_link }}" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                                    <li><a href="{{ site.medium_link }}" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+                                    <li><a href="{{ site.twitter_link }}" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                                    <li><a href="{{ site.linkedin_link }}" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
                                 </ul>
                             </header>
-                            <!-- <section id="banner">
-                                <div class="content"></div>
-                            </section> -->
+                            <section>
+                                <div class="content">
+                                    <header id="header2">
+                                        {% assign cat = page.categories | split: ")" %}
+										<div>
+											<h1>{{ cat[1] }}: {{ page.title }}</h1>
+											<p>{{ page.description }}</p>
+										</div>
+										<!-- <ul class="icons">
+											{% if page.prev_page_title != null and page.prev_page_title != "" %}
+												<li><a href="{{ site.baseurl }}{{ page.prev_page_permalink }}" class="button">{{ page.prev_page_title }} <i class="fas fa-arrow-left"></i></a>
+												</li>
+											{% endif %}
+											{% if page.next_page_title != null and page.prev_page_title != "" %}
+												<li><a href="{{ site.baseurl }}{{ page.next_page_permalink }}" class="button">{{ page.next_page_title }} <i class="fas fa-arrow-right "></i></a></li>
+											{% endif %}
+										</ul> -->
+                                    </header>
+                            </section>
                             <div class="section">
-                                <!-- <h1>{{ title }}</h1> -->
                                 <p> {{ content }} </p>
                             </div>
+							<footer id="header2">
+								<ul class="icons">
+									{% if page.prev_page_title != null and page.prev_page_title != "" %}
+										<li><a href="{{ site.baseurl }}{{ page.prev_page_permalink }}" class="button"><i class="fas fa-arrow-left"></i>{{ page.prev_page_title }}</a>
+										</li>
+									{% endif %}
+									{% if page.next_page_title != null and page.prev_page_title != "" %}
+										<li><a href="{{ site.baseurl }}{{ page.next_page_permalink }}" class="button">{{ page.next_page_title }} <i class="fas fa-arrow-right "></i></a></li>
+									{% endif %}
+								</ul>
+							</footer>
 						</div>
 					</div>
 
@@ -53,10 +108,10 @@
 											<span class="opener">{{ cat }}</span>
 											<ul>
                                             {% assign mypages = site.pages | sort: "order" %}
-                                            {% for page in mypages %}
-                                                {% for pc in page.categories %}
+                                            {% for pg in mypages %}
+                                                {% for pc in pg.categories %}
                                                     {% if pc == cat %}
-                                                        <li><a href="{{ site.baseurl }}{{ page.permalink }}">{{ page.title }}</a></li>
+                                                        <li><a href="{{ site.baseurl }}{{ pg.permalink }}">{{ pg.title }}</a></li>
                                                     {% endif %}   <!-- cat-match-p -->
                                                 {% endfor %}  <!-- page-category -->
                                             {% endfor %}  <!-- page -->

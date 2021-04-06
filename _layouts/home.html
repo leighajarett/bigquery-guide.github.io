@@ -4,6 +4,8 @@
 		<title>BigQuery Guide</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@700&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="../assets/css/main.css" />
 	</head>
 	<body class="is-preload">
@@ -15,28 +17,22 @@
 
 							<!-- Header -->
 								<header id="header">
-									<a href="index.html" class="logo"><strong>BigQuery</strong> Guide for Developers & Administrators</a>
+									<a href="index.html" class="logo">{{ site.name }}</a>
 									<ul class="icons">
-										<li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
-										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-										<li><a href="#" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-										<!-- <li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li> -->
+										<li><a href="{{ site.github_link }}" class="icon brands fa-github"><span class="label">Github</span></a></li>
+										<li><a href="{{ site.medium_link }}" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+										<li><a href="{{ site.twitter_link }}" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="{{ site.linkedin_link }}" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
 									</ul>
 								</header>
-
 							<!-- Banner -->
-								<section id="banner">
+								<section id="banner" style="margin-top: 100px;">
 									<div class="content">
 										<header>
-											<h1>BigQuery for Developers & Administrators</h1>
-											<p>A practical guide to architecting, monitoring and optimizing your data warehouse</p>
+											<h1>{{ site.name }}</h1>
+											<h3>{{ site.subtitle }}</h3>
 										</header>
-											<p>This guide was created by the Google Cloud Developer Relations team to teach new BigQuery users the fundamentals. Throughout this guide, we will link back to the BigQuery documentation for further details and code snippets. Where possible, we will include hands-on tutorials from codelabs and provide best-practice tips we have observed from customers.</p>
-										<!-- <p></p> -->
-										<ul class="actions">
-											<li><a href="#" class="button big">Learn about the Authors</a></li>
-											<li><a href="#" class="button big">Start with the Introduction</a></li>
-										</ul>
+										{{ content }}
 									</div>
 									<span class="image object">
 										<img src="../assets/images/bigquery.png" alt=""/>
