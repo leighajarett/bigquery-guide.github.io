@@ -96,7 +96,7 @@ BigQuery BI Engine is an in-memory analysis service that intellignetly caches's 
 
 - To leverage BI engine you create a BI engine reservation
 
-    - BI Engine reservations are measured in GB as opposed to slots
+    - While standard BigQuery reservations manage compute resources, BI Engine reservations manage memory resource - they are measured in GB
 
     - BI Engine reservations also belong to a project and are specific to the location that it was created in
 
