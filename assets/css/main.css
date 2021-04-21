@@ -128,14 +128,14 @@ em, i {
   font-style: italic; }
 
 p {
-  margin: 0 0 2em 0; }
+  margin: 0 0 .5em 0; }
 
 h1, h2, h3, h4, h5, h6 {
   color: #3d4449;
   font-family: 'Cabin Sketch', cursive;
   font-weight: 700;
   line-height: 1.5;
-  margin: 0 0 1em 0; }
+  margin: 2em 0 1em 0; }
   h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     color: inherit;
     text-decoration: none;
@@ -1944,6 +1944,9 @@ button,
   font-size: 0.9em;
   position: relative;
   width: 26em; }
+  #sidebar p {
+    margin-bottom: 3em;
+  }
   #sidebar h2 {
     font-size: 1.38889em; }
   #sidebar > .inner {
@@ -1953,7 +1956,7 @@ button,
     #sidebar > .inner > * {
       border-bottom: solid 2px rgba(210, 215, 217, 0.75);
       margin: 0 0 3.5em 0;
-      padding: 0 0 3.5em 0; }
+      padding: 4em 0 3.5em 0; }
       #sidebar > .inner > * > :last-child {
         margin-bottom: 0; }
       #sidebar > .inner > *:last-child {
@@ -2125,7 +2128,7 @@ button,
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  padding: 2em 0 1em 0;
+  padding: 2em 0 0em 0;
   position: relative; }
   #header2> * {
     -moz-flex: 1;

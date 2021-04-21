@@ -5,12 +5,12 @@ categories: (1) Resource Concepts
 permalink: /resource_concepts/tables/
 order: 2
 description: Here, we’ll go through some common patterns for structuring your BigQuery projects. You can combine these techniques to create a hierarchy that works best for your organization.
-next_page_title: Routines
+next_page_title: Routines & ML Models
 next_page_permalink: /resource_concepts/routines/
 prev_page_title: Projects Structures
 prev_page_permalink: /resource_concepts/project_structures/
 ---
-![image]({{site.baseurl}}/assets/images/BQ_Console_Tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 40px"}
+![image](/assets/images/BQ_Console_Tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 40px"}
 
 A BigQuery *table* is a resource that lives inside of a dataset. It contains individual records organized in rows, with each record composed of columns (also called fields) where a specified data type is enforced.
 
@@ -56,13 +56,13 @@ When you create a table in BigQuery, you can provide a schema or leverage autode
 | Array (REPEATED) | list of elements of another type. Elements maintain order, list can be empty, cannot be persisted as  NULL, cannot directly create an array of arrays |
 | Struct (RECORD) | representation made up of multiple leaf fields (like a JSON). Structs can contain all other types including other structs. Leaf fields can be anonymous (meaning they don’t have a specified name, but they do have a type) or have a named type plus identifier |
 
-<a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types" class="button">Details on Data Types</a>
+<a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types" class="button">Details on Data Types (docs)</a>
 
 ## Managed (Native tables)
 
 Managed tables are tables that are backed by native BigQuery storage, which we’ll dive deeper into in [later modules](#). With managed tables, a user defines basic logical constraints in BigQuery (e.g. schema, lifecycle) and the system manages the details. 
 
-![image]({{site.baseurl}}/assets/images/tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 0px; margin-top: 20px"}
+![image](/assets/images/tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 0px; margin-top: 20px"}
 
 ```
 CREATE TABLE `project-id.my_dataset.order_items`
@@ -84,19 +84,19 @@ CREATE TABLE `project-id.my_dataset.order_items`
 FROM `project-id.my_dataset.my_table`
   FOR SYSTEM_TIME AS OF TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 1 HOUR);```
 
-<a href="https://cloud.google.com/bigquery/docs/tables-intro" class="button">Working with Tables</a>
+<a href="https://cloud.google.com/bigquery/docs/tables-intro" class="button">Working with Tables (docs)</a>
 
 ## External (Federated tables)
 External tables are backed by storage external to BigQuery. *This can be especially useful for some ETL patterns, or multi-consumer workflows where BQ storage isn’t the source of truth.*
 
-![image]({{site.baseurl}}/assets/images/external_tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 70px; margin-top: 70px"}
+![image](/assets/images/external_tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 70px; margin-top: 70px"}
 
 - BigQuery current supports the following external storage systems: Cloud SQL (including partitions), Cloud Storage, Cloud Bigtable and Google Drive 
 - You can join external tables onto native tables so long as the underlying data is stored in the same region
 - You can create temporary external tables that are just used for single query, this is especially useful for ad-hoc queries 
 
 ### Connection
-![image]({{site.baseurl}}/assets/images/external_tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 70px; margin-top: 70px"}
+![image](/assets/images/external_tables.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 70px; margin-top: 70px"}
 
 - More analogous to a "federated dataset", it is a link to a remote system (currently only Cloud SQL is supported), but information about the tables are not defined locally on the BigQuery side
 - With an [external query](https://cloud.google.com/bigquery/docs/cloud-sql-federated-queries), CloudSQL returns results which are then stored as temporary tables to be used in BigQuery
@@ -127,15 +127,15 @@ Keep in mind that **query performance for external data sources may not be as hi
 - There is a data lake (e.g. Storage bucket) that feeds into other systems like DataProc - however, BigQuery spark connectors make it easier to leverage data stored in BigQuery as a data lake 
 - As an intermediary place to run ad hoc queries against external data sources until there is enough justification to migrate the data into BigQuery
 
-<a href="https://cloud.google.com/bigquery/external-data-sources" class="button">Querying External Data Sources</a>
-<a href="https://cloud.google.com/bigquery/docs/working-with-connections" class="button">Working with Connections</a>
+<a href="https://cloud.google.com/bigquery/external-data-sources" class="button">Querying External Data Sources (docs)</a>
+<a href="https://cloud.google.com/bigquery/docs/working-with-connections" class="button">Working with Connections (docs)</a>
 <a href="https://cloud.google.com/bigquery/docs/working-with-connections" class="button">Querying External Data (vid)</a>
 
 
 ## Views
 Views are virtual tables that are defined by a SQL query. Views can either be a logical view or a materialized view
 
-![image]({{site.baseurl}}/assets/images/views.png){: style="float: right;width: 50%; margin-left: 40px; margin-top: 50px; margin-bottom: 200px"}
+![image](/assets/images/views.png){: style="float: right;width: 50%; margin-left: 40px; margin-top: 50px; margin-bottom: 200px"}
 
 - **Logical views** only reference a SQL query
     - When a user queries the view, BigQuery will execute the SQL statement to actually create the view at run time, it will not save the result anywhere
@@ -154,6 +154,7 @@ CREATE  VIEW project-id.my_dataset.my_mv_table AS
 - **Materialized views** are precomputed views that periodically cache the results of a query for increased performance and efficiency
     - Materialized views are recomputed in the background when the base table changes,  no user action is required - they are always fresh
     - If a query against the base table can be resolved by querying the materialized view, BigQuery will also reroute for better performance 
+    - Materialized views are useful if you have complex, predictable queries that need high processing power or if you need access to real-time aggregations
     - Keep in mind that materialized views use a restricted SQL syntax and a limited set of aggregation functions, they also can only use a single table (no joins)
 
 ```
@@ -163,8 +164,8 @@ CREATE MATERIALIZED VIEW project-id.my_dataset.my_mv_table AS
     GROUP BY date
 ```
 
-<a href="https://cloud.google.com/bigquery/docs/views-intro" class="button">Working with Views</a>
+<a href="https://cloud.google.com/bigquery/docs/views-intro" class="button">Working with Views (docs)</a>
 <a href="https://cloud.google.com/bigquery/docs/share-access-views" class="button">Creating an Authorized View Tutorial</a>
 <a href="https://cloud.google.com/bigquery/docs/share-access-views" class="button">Authorized Views (vid)</a>
-<a href="https://cloud.google.com/bigquery/docs/materialized-views-intro" class="button">Working with Materialized Views</a>
+<a href="https://cloud.google.com/bigquery/docs/materialized-views-intro" class="button">Working with Materialized Views (docs)</a>
 

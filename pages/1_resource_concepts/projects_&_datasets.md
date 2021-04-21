@@ -17,7 +17,7 @@ prev_page_permalink: /introduction/background_introduction/
 
 ## Organizations, Folders and Billing Accounts
 
-![image]({{site.baseurl}}/assets/images/GCP_resource_console.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"}
+![image](/assets/images/GCP_resource_console.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"}
 
 - [**The Organization**](https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy#organizations) resource is the root node of the GCP resource hierarchy. It represents a company and is closely associated with your organization’s domain by linking to one [Google Workspace](https://gsuite.google.com/?_ga=2.44366563.637813095.1617627706-1731652653.1615906420) or [Cloud Identity account](https://cloud.google.com/identity)..
 
@@ -31,11 +31,11 @@ prev_page_permalink: /introduction/background_introduction/
 
 - [**A Billing Account**](https://cloud.google.com/billing/docs/concepts) is required to use BigQuery, unless you are using the BigQuery sandbox. Many times, different teams will want to be billed individually for consuming resources in Google Cloud. Therefore, each billing group will have its own billing account, which results in a single invoice and is tied to a Google Payments profile. 
 
-<a href="https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy" class="button">Google Cloud Resource Hierarchy Docs</a>
-<a href="https://cloud.google.com/docs/enterprise/best-practices-for-enterprise-organizations#define-hierarchy" class="button">Best Practices for Google Cloud Resource Hierarchy</a>
+<a href="https://cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy" class="button">Google Cloud Resource Hierarchy (Docs)</a>
+<a href="https://cloud.google.com/docs/enterprise/best-practices-for-enterprise-organizations#define-hierarchy" class="button">Best Practices for Google Cloud Resource Hierarchy (Docs)</a>
 
 ## Projects
-![image]({{site.baseurl}}/assets/images/BQ_Console_Projects.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"} 
+![image](/assets/images/BQ_Console_Projects.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"} 
 
 A [Project](https://cloud.google.com/billing/docs/concepts#projects) is required to use BigQuery, and forms the basis for creating, enabling, and using all Google Cloud services, including managing APIs, enabling billing, adding and removing collaborators, and managing permissions.
 
@@ -49,11 +49,14 @@ A [Project](https://cloud.google.com/billing/docs/concepts#projects) is required
 
 - **Access controls:** You can grant permissions for accessing data at the project level 
 
-<button href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">Creating and Managing Projects</button>
-<button href="https://cloud.google.com/resource-manager/docs/access-control-proj">Access Controls for Projects</button>
+- **Managing infrastructure with terraform:** Just like other Google Cloud Resources, you can use terraform to provision BigQuery Infrastructure include Projects and Datatsets, see details on the [module here](https://registry.terraform.io/modules/terraform-google-modules/bigquery/google/latest)
+
+
+<button href="https://cloud.google.com/resource-manager/docs/creating-managing-projects">Creating and Managing Projects (Docs)</button>
+<button href="https://cloud.google.com/resource-manager/docs/access-control-proj">Access Controls for Projects (Docs)</button>
 
 ## Datasets
-![image]({{site.baseurl}}/assets/images/BQ_Console_Datasets.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"} 
+![image](/assets/images/BQ_Console_Datasets.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"} 
 
 [Datasets](https://cloud.google.com/bigquery/docs/datasets-intro) are top-level containers, within a Project, that are used to organize and control access to your tables and views. A table or view must belong to a dataset, so you *need to create at least one dataset before loading data* into BigQuery.
 
@@ -68,6 +71,5 @@ A [Project](https://cloud.google.com/billing/docs/concepts#projects) is required
 - **Access controls:** You can control access at the dataset level
 
 
-<button href="https://cloud.google.com/bigquery/docs/datasets">Creating Datasets</button>
-<button href="https://cloud.google.com/bigquery/docs/managing-datasets">Managing Datasets</button>
-<button href="https://cloud.google.com/bigquery/docs/dataset-access-controls ">Access Controls for Datasets</button>
+<button href="https://cloud.google.com/bigquery/docs/datasets">Creating & Managing Datasets (Docs)</button>
+<button href="https://cloud.google.com/bigquery/docs/dataset-access-controls ">Access Controls for Datasets (Docs)</button>

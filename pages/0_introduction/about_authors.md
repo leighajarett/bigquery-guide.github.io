@@ -17,3 +17,5 @@ Hello! I'm Leigha - and I'm a Developer Advocate at Google Cloud specifically fo
     <li><a href="{{ site.twitter_link }}" class="icon brands fa-twitter"> Follow me on Twitter</a></li>
     <li><a href="{{ site.linkedin_link }}" class="icon brands fa-linkedin"> Follow me on LinkedIn</a></li>
 </ul>
+
+## This is a placeholder because I will add all the contributors here! :) 
