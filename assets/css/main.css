@@ -1519,6 +1519,7 @@ button,
   padding: 0 2.25em;
   text-align: center;
   text-decoration: none;
+  margin: 1em 0 2em 0;
   /* text-transform: uppercase; */
   white-space: nowrap; }
   input[type="submit"]:hover,
@@ -2143,7 +2144,7 @@ button,
     position: absolute;
     right: -0.5em;
     top: -2em; 
-=  }
+  }
 
 
 /* Banner */

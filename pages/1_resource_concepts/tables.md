@@ -16,8 +16,10 @@ A BigQuery *table* is a resource that lives inside of a dataset. It contains ind
 
 - **Data access** can also be controlled at the table, row and column levels. More details on data governance are discussed later
 - **Metadata** such as descriptions and labels can be used for surfacing information to end users and as tags for monitoring
-- **Expiration:** When you create a  table in BigQuery you are able to specify an expiration time - this allows you to create temporary tables like you might in another database like SQL Server
+- **Expiration:** When you create a  table in BigQuery you are able to specify an expiration time 
 - **Creating & Managing:** You can create and manage a table either directly in the UI, through the API / Client SDKs or in a SQL query using a [DDL statement](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language). You can see information about tables directly in the UI nested underneath your datasets. 
+- **Temporary Tables:** You can also create a temporary table using the [TEMP or TEMPORARY keyword](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#temporary_tables), this table can then be referenced for the duration of the script
+- **Cached Tables:** BigQuery writes all query results to a table - one either explicitly identified by the user or to a [cached results table](https://cloud.google.com/bigquery/docs/cached-results). Temporary, cached results tables are maintained per-user, per-project. There are no storage costs for temporary tables.
 
 ### Schemas and Data Types
 When you create a table in BigQuery, you can provide a schema or leverage autodetect. Schemas can also include **column descriptions.** BigQuery supports several different data types which are listed below, including arrays, structs and geographys. You can learn more about working with table schemas here. 
@@ -25,7 +27,7 @@ When you create a table in BigQuery, you can provide a schema or leverage autode
 #### Numeric
 
 | Name | Description |
-| --- | ----------- |
+| --- | ------ ----- |
 | Integer (INT64) | 64 bit signed integer, no way to represent unsigned integer |
 | Floating point (FLOAT64) | Includes -inf, +inf, and NaN |
 | Numeric (NUMERIC) | Exact numeric value of precision 38 (total digits) and scale 9 (digits after decimal), offers more precision than floating point |
