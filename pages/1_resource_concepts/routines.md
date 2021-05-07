@@ -5,10 +5,10 @@ categories: (1) Resource Concepts
 permalink: /resource_concepts/routines/
 order: 3
 description: Routines and Machine Learning models are resources within datasets. Routines allow you to reuse functions and procedures for handlng data in a unique way. Models allow you to make predictions using built in machine learning functionality.
-next_page_title: Project Structures
-next_page_permalink: /resource_concepts/project_structures/
-prev_page_title: Background & Introduction
-prev_page_permalink: /introduction/background_introduction/
+next_page_title: Jobs & Reservation Model
+next_page_permalink: /resource_concepts/jobs_reservations/
+prev_page_title: Tables
+prev_page_permalink: /resource_concepts/tables/
 ---
 
 In BigQuery, a routine is either a user defined function (UDF) or a procedure. Routines are a resource belonging to a dataset, you can grant users the BigQuery Viewer role on a routine so that they can leverage them within their own queries. 

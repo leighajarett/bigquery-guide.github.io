@@ -5,10 +5,10 @@ categories: (1) Resource Concepts
 permalink: /resource_concepts/jobs_reservations/
 order: 5
 description: BigQuery leverages jobs to perform actions within your data warehouse
-next_page_title: 
-next_page_permalink: 
-prev_page_title: Machine Learning Models
-prev_page_permalink: /resource_concepts/ml_models/
+next_page_title: Reservation Sutrcture
+next_page_permalink: /resource_concepts/reservation_structure/
+prev_page_title: Routines & ML Models
+prev_page_permalink: /resource_concepts/routines/
 ---
 
 ## Jobs
@@ -90,6 +90,14 @@ There are several different resources related to the reservation model, each one
 <a href="https://cloud.google.com/bigquery/pricing#flat_rate_pricing" class="button">Flat Rate Pricing (docs)</a>
 <a href="https://cloud.google.com/bigquery/docs/reservations-intro" class="button">Reservations for Workload Management (docs)</a>
 
+## Fair Scheduler
+BigQuery has a fair scheduler:
+- If one query is executing within BigQuery, it has full access to the amount of slots available to the project or reservation
+- If we suddenly execute a second query, BigQuery will logically split the slots between the 2 queries for a worst case scenario where both queries request more slots than are available
+- If there are slots that are not being used, then any query can consume unused slots 
+- This subdividing of compute resources will continue to happen as more queries are executed
+- Therefore, it's unlikely that one resource-heavy query will overpower the system and steal resources from other running queries
+
 ## BI Engine Reservation
 
 BigQuery BI Engine is an in-memory analysis service that intellignetly caches's data stored in BigQuery for fast and fresh dashboards
@@ -103,3 +111,4 @@ BigQuery BI Engine is an in-memory analysis service that intellignetly caches's 
 
 <a href="https://cloud.google.com/bi-engine/docs/introduction" class="button">What is BI Engine? (docs)</a>
 <a href="https://cloud.google.com/bi-engine/docs/reserving-capacity" class="button">Reserving BI Engine Capacity (docs)</a>
+

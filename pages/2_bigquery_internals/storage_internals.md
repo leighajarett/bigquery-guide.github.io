@@ -22,7 +22,7 @@ Traditional relational databases, like Postgres and MySQL, store data row-by-row
 BigQuery, uses **columnar storage** where each column is stored in a separate file block. This makes BigQuery an ideal solution for OLAP (Online Analytical Processing) use cases. When you want to perform aggregations you only need to read the column that you are aggregating over. 
 
 
-## Storage Format
+## Optimized Storage Format
 ![image](/assets/images/capacitor.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"}
 
 Internally, BigQuery stores data in a proprietary columnar format called **Capacitor**
@@ -113,16 +113,3 @@ BigQuery supports clustering over both partitioned and non-partitioned tables. W
 
 For details on how you should make decisions for partitions and clusters, check out the storage optimization section!
 
-
-## Loading data into BigQuery
-
-### Batch 
-### Streaming
-
-You can stream (append) data easily to BigQuery tables and update or delete existing values. BigQuery supports mutations (INSERT, UPDATE, MERGE, DELETE) without limits.
-
-
-
-
-
-Once slot workers read their data from disk, BigQuery can automatically determine more optimal data sharding and quickly repartition data using BigQuery’s in-memory shuffle service.
