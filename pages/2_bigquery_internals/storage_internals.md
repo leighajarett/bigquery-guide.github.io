@@ -5,10 +5,10 @@ categories: (2) BigQuery Internals
 permalink: /internals/storage/
 order: 0
 description: Here, we’ll go walk through what happens under the hood for BigQuery storage
-next_page_title: Query Internals
+next_page_title: Life of a Query
 next_page_permalink: /internals/query
-prev_page_title: Reservation Structures
-prev_page_permalink: /resource_concepts/reservation_stuctures/
+prev_page_title: Workload Management
+prev_page_permalink: /resource_concepts/workload_management/
 ---
 
 BigQuery offers fully managed storage, meaning you don't have to provision servers. Sizing is done automatically and you only pay for what you use. 
@@ -105,11 +105,12 @@ Clustering can improve the performance of certain types of queries:
 - Queries containing where clauses with a clustered column: BigQuery uses the sorted blocks to eliminate scans of unnecessary data
 - Queries that aggregate data based on values in a clustered column: performance is improved because the sorted blocks collocate rows with similar values
 
-BigQuery supports clustering over both partitioned and non-partitioned tables. When you use clustering and partitioning together, your data can be partitioned by a DATE or TIMESTAMP column and then clustered on a different set of columns (up to four columns).
+BigQuery supports clustering over both partitioned and non-partitioned tables.
 
 
 <a href="https://cloud.google.com/bigquery/docs/clustered-tables" class="button">Working with Clustered Tables (docs)</a>
 
 
-For details on how you should make decisions for partitions and clusters, check out the storage optimization section!
+For details on how you should make decisions for partitions and clusters, check out the [storage optimization]() section!
+
 

@@ -4,7 +4,7 @@ layout: default
 categories: (1) Resource Concepts
 permalink: /resource_concepts/jobs_reservations/
 order: 5
-description: BigQuery leverages jobs to perform actions within your data warehouse
+description: Here, we'll walk through how BigQuery leverages jobs and compute resources to perform actions within your data warehouse
 next_page_title: Reservation Sutrcture
 next_page_permalink: /resource_concepts/reservation_structure/
 prev_page_title: Routines & ML Models
@@ -67,13 +67,13 @@ There are several different resources related to the reservation model, each one
 
     - [**Slot**](https://cloud.google.com/bigquery/docs/slots): BigQuery unit of computational capacity, on-demand customers get access to 2,000 slots per project
 
-    - BigQuery offers several commitment plans to choose from:
+    - BigQuery offers several commitment plans to choose from, the longer the commitment the more discounted the slots are:
+
+        - **Annual commitment**: you purchas 365-day commitment which can be auto-renewed
 
         - **Monthly commitment**: minimum 30-day commitment
         
-        - **Annual commitment**: you purchas 365-day commitment which can be auto-renewed
-        
-        - **Flex slots**: you purchase a 60-second commitment. Useful for testing how your workloads perform with flat-rate billing, before purchasing a longer-term commitment
+        - **Flex slots**: you purchase a 60-second commitment. Useful for testing how your workloads perform with flat-rate billing, before purchasing a longer-term commitment or for cyclical workloads (e.g. this query runs every Monday morning)
 
 - [**Reservation**](https://cloud.google.com/bigquery/docs/reservations-intro#reservations): Bucket of slots, can be allocated in different ways that make sense for your organization (for example a *prod* reservation for production )
 
@@ -91,11 +91,18 @@ There are several different resources related to the reservation model, each one
 <a href="https://cloud.google.com/bigquery/docs/reservations-intro" class="button">Reservations for Workload Management (docs)</a>
 
 ## Fair Scheduler
+![image](/assets/images/fair_scheduler.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 10px"}
+
 BigQuery has a fair scheduler:
+
 - If one query is executing within BigQuery, it has full access to the amount of slots available to the project or reservation
+
 - If we suddenly execute a second query, BigQuery will logically split the slots between the 2 queries for a worst case scenario where both queries request more slots than are available
+
 - If there are slots that are not being used, then any query can consume unused slots 
+
 - This subdividing of compute resources will continue to happen as more queries are executed
+
 - Therefore, it's unlikely that one resource-heavy query will overpower the system and steal resources from other running queries
 
 ## BI Engine Reservation

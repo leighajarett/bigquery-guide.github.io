@@ -5,19 +5,19 @@ categories: (2) BigQuery Internals
 permalink: /internals/query_execution/
 order: 2
 description: Armed with our new understanding of the life of a query, we can dive deeper into query execution. 
-next_page_title: 
-next_page_permalink: 
-prev_page_title: 
-prev_page_permalink: 
+next_page_title: Storage Optimization
+next_page_permalink: /internals/storage_optimization/
+prev_page_title: Life of a Query
+prev_page_permalink: /internals/query/
 ---
-Earlier in this section, we talked about Colossus - Googles's distributed filesystem which stores BigQuery data. To actually compute data, BigQuery uses Dremel. Workers, or slots, are used to extract data from storage (we'll call these leaf nodes) and perform aggregations (we'll call these mixers). Data that needs to be shared between slots is stored in the shuffle. Movement of data is facilitated by Jupiter, the 1 petabit/sec network through which storage and compute talk.
+Earlier in this section, we talked about Colossus - Google's distributed filesystem which stores BigQuery data. To actually compute data, BigQuery uses Dremel. Workers, or slots, are used to extract data from storage and perform aggregations. Data that needs to be shared between slots is stored in the shuffle. Movement of data is facilitated by Jupiter, the 1 petabit/sec network through which storage and compute talk.
 
 ## Remote Memory Shuffle
 ![image](/assets/images/memory_shuffle.png){: style="float: right;width: 50%; margin-left: 40px; margin-bottom: 40px"}
 
 In-memory BigQuery shuffle **stores intermediate data produced from various stages of query processing** in a set of nodes that are dedicated to hosting remote memory. 
 
-This lets you query large datasets and get fast responses. Each executed query is broken up into stages which are then processed by workers / slots and written back out to shuffle. We’ll see this later on with the query plan, which details each of these stages.
+This lets you query large datasets and get fast responses. Each executed query is broken up into stages which are then processed by workers and written back out to shuffle. We’ll see this later on with the query plan, which details each of these stages.
 
 In BigQuery, each shuffled row can be consumed by BigQuery workers as soon as it's created by the producers. This makes it possible to execute distributed operations in a pipeline. If a worker were to have an issue during query processing, another worker would simply pick up where the previous one left off by reading from the previous shuffle. This provides resilience to failures within workers themselves. When a query is complete, the results are written out to persistent storage and returned to the user. This also enables us to serve up cached results the next time that query executes.
 
@@ -37,7 +37,7 @@ WHERE start_station_name LIKE "%Broadway%"
 
 From this diagram, we can see at a high level how BigQuery breaks down execution into different stages:  
 
-1. In the first stage, a set of leaf nodes access the distributed storage to read the table, filter down the records, and generate partial counts
+1. In the first stage, a set of workers access the distributed storage to read the table, filter down the records, and generate partial counts
 
 2. These workers then send their counts to another stage, which sums them all together and returns the final result to the query controller.
 
@@ -55,7 +55,11 @@ From this diagram, we can see at a high level how BigQuery breaks down execution
 
 In the console, we can view the query plan to get even deeper into the details of the query execution. In BigQuery, execution plans are divided into the different stages of execution, with stage 0 where the leaf nodes do work and stage 1+  where the mixers do work.
 
-There are also several different phases in each stage. The compute phase is where the actual processing takes place, such as evaluating SQL functions or expressions. In the wait phase, the engine is waiting for either the slots to become available or for a previous stage to start writing results that it can begin consuming. In the read phase, the slot is reading data either from Colossus (in the case of leaf nodes) or from shuffle (in the case of mixer nodes). The final stage is the write phase, where data is written, either to the next stage, or shuffle, which is the output returned to the developer.
+There are also several different phases in each stage:
+
+- **Compute Phase:** where the actual processing takes place, such as evaluating SQL functions or expressions. 
+- **Wait Phase:** the engine is waiting for either the slots to become available or for a previous stage to start writing results that it can begin consuming. 
+- **Read Phase:** the slot is reading data either from Colossus (in the case of leaf nodes) or from shuffle (in the case of mixer nodes). The final stage is the write phase, where data is written, either to the next stage, or shuffle, which is the output returned to the developer.
 
 A well-tuned query typically spends most of its time in the compute phase, and an average compute time close to max compute time indicates an even distribution of data coming out of the previous stage.
 
@@ -66,7 +70,7 @@ In the query plan for our example query, we can see the stages as reflected in t
 
 ## Combining Data: Understanding JOINs
 
-One of the powerful abilities of SQL is the ability to combine data to understand relationships and correlate information from different sources.  Much of the JOIN syntax is about expressing how that data should be combined, and how to handle  mismatched data.
+One of powerful attribute of SQL is the ability to combine data to understand relationships and correlate information from different sources. Much of the JOIN syntax is about expressing how that data should be combined, and how to handle  mismatched data.
 
 But BigQuery needs to figure out how to actually execute it. Because BigQuery came about to help solve the large data processing needs of Google itself - large scale joins were one of the first concerns for the query engine. 
 
@@ -77,7 +81,7 @@ When joining two tables on a common key, BigQuery favors a technique called the 
 ![image](/assets/images/hash_joins.png){: style="float: center;width: 60%; margin-left: 40px; margin-bottom: 40px"}
 
 
-So what actually is hashing? When we hash values, we're converting the input value into a number that falls in a known range. There are many properties of hash functions that we care about for hash joins, but two of the most important are that our function is deterministic (meaning that the same input always yields the same output value) and uniform (our output values are evenly spread throughout the allowed range of values).
+*So what actually is hashing?* When we hash values, we're converting the input value into a number that falls in a known range. There are many properties of hash functions that we care about for hash joins, but two of the most important are that our function is deterministic (meaning that the same input always yields the same output value) and uniform (our output values are evenly spread throughout the allowed range of values).
 
 With an appropriate hashing function, we can use the output to bucket values.  For example, if our hash function yields an output floating point value between 0 and 1, we can bucket by dividing that key range into N parts, where N is the number of buckets we want. Grouping data based on this hash value means our buckets should have roughly the same number of discrete values, but even more importantly, all duplicate values should end up in the same bucket.
 
@@ -94,7 +98,7 @@ In the diagram, we have three columnar files in the first table, and we've used 
 This is effectively the same work as the first stage, but we're processing the other table we'll be joining data against.  The important thing to note here is that we need to use the same hashing function and bucket, as we're aligning data.  In the diagram above, the second table has four input files (and thus four worker), and the data is written into a second set of shuffle partitions.
 
 
-#### Stage 3: Consume the Aligned data and Perform the Koin
+#### Stage 3: Consume the Aligned data and Perform the Join
 
 After the first two stages are completed, we've aligned the data in the two tables using a common hash function and bucketing strategy. What this means is that we have a set of paired shuffle partitions that correspond to the same hash range, which means that instead of scanning potentially large sets of data, we can execute the join in pieces because each worker is only provided the relevant data for doing its subset of the join.
 

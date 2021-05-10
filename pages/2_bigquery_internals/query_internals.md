@@ -4,11 +4,11 @@ layout: default
 categories: (2) BigQuery Internals
 permalink: /internals/query/
 order: 1
-description: Here, we’ll give an overview 
-next_page_title: 
-next_page_permalink: 
-prev_page_title: 
-prev_page_permalink: 
+description: Before going into the details of query exeuction, lets take a look at the entire life of a query
+next_page_title: Query Execution
+next_page_permalink: /internals/query_execution/
+prev_page_title: Storage Internals
+prev_page_permalink: /internals/storage/
 ---
 
 ![image](/assets/images/life_of_query.png){: style="width: 70%"}
