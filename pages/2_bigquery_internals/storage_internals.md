@@ -109,8 +109,9 @@ BigQuery supports clustering over both partitioned and non-partitioned tables.
 
 
 <a href="https://cloud.google.com/bigquery/docs/clustered-tables" class="button">Working with Clustered Tables (docs)</a>
+<a href="https://codelabs.developers.google.com/codelabs/gcp-bq-partitioning-and-clustering#0" class="button">Partitioning & Clustering (Tutorial)</a>
 
 
-For details on how you should make decisions for partitions and clusters, check out the [storage optimization]() section!
+For details on how you should make decisions for partitions and clusters, check out the [storage optimization](/internals/storage_optimization/) section!
 
 

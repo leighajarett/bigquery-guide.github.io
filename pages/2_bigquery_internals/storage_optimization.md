@@ -19,7 +19,9 @@ As we discussed in the [storage internals]() section, BigQuery allows you to clu
 
 - **Partitions are designed for places where there is a low number of distinct values**, generally less than a few thousand. If you over partition your tables, you’ll create a lot of metadata - which means that if you ever need to read in the entire table, it will be inefficient. For example, you might write queries where you're often looking at orders placed in the last hour. To make this query really efficient, you may decide to partition on the hour that the order was placed. However, if you have a few years worth of data this would result in more than 10,000 partitions. Not only is this over the 4,000 partition limit, but if users on your team are also writing queries to go further back in time having that many partitions would add overhead and decrease performance
 
-- **Clusters can be used for columns with higher cardinality**. In BigQuery, you can specify up to four cluster keys - the data will be sorted in the order that the keys are provided, meaning the first key will likely have the largest impact the amount of data scanned. Clustering also helps to improve the performance of aggregations, so you may also want to consider keys that are often used to aggregate against. For example, if you're frequently calculating the total spend for each customer you might want to cluster on customer ID.
+- **Clusters can be used for columns with higher cardinality**, and if there aren't a lot of GB in each partition clustering will be more performant than partitioning. In BigQuery, you can specify up to four cluster keys - the data will be sorted in the order that the keys are provided, meaning the first key will likely have the largest impact the amount of data scanned. Clustering also helps to improve the performance of aggregations, so you may also want to consider keys that are often used to aggregate against. For example, if you're frequently calculating the total spend for each customer you might want to cluster on customer ID. 
+
+<a href="https://hoffa.medium.com/bigquery-optimized-cluster-your-tables-65e2f684594b" class="button">Cluster Your Tables (Blog)</a>
 
 ## Partitioning Instead of Sharding
 
@@ -29,9 +31,13 @@ In BigQuery, you can date shard a table by having multiple tables with the same 
 
 ## Denormalizing Data
 
-Denormalization is a strategy used to improve the performance on relational datasets. When data is normalized, information is stored in separate logical tables. For example, information about a user might be stored in a separate user table. But with denormalization we colocate data even if it means repeating some information. For example, attributes that might be saved in the user table (name, adress) are instead also incorporate into the fact table (like an orders table). This can improve performance because we don't need to read data from two different tables and join them. Because storage is so cheap, the cost of repeating this information is usually minimal. Additionally, structs and repeated records make it easy to structure this information in BigQuery. 
+Denormalization is a strategy used to improve the performance on relational datasets. When data is normalized, information is stored in separate logical tables. For example, information about a user might be stored in a separate user table. But with denormalization we colocate data even if it means repeating some information. For example, attributes that might be saved in the user table (name, adress) are instead also incorporate into the fact table (like an orders table). This can improve performance because we don't need to read data from two different tables and join them. Because storage is so cheap, the cost of repeating this information is usually minimal. 
+
+Additionally, structs and repeated records make it easy to structure this information efficiently BigQuery. For example, if you performed "flat denormalization", you would have two rows (one for each item) even though you only have a single order. This would require an aggregation to perform analysis. Instead by using nesting, you can store the data in it's more natural form (an array) and avoid the unnecessary aggregation. For example using the ARRAY_LENGTH() function to understand the number of items per order.
 
 Although denormalizing data can improve efficiency, it may involve re-shaping many tables which can disrupt workflows so it's easiest to start with other improvements like partitions and clusters. More so, de-normalizing isn't a good fit for data where the dimensional values are often changing (for example, if users are often updating their addresses) because that would require updating multiple rows in BigQuery.
+
+
 
 <a href="https://cloud.google.com/architecture/dw2bq/dw-bq-performance-optimization#denormalization" class="button">Denormalization (docs)</a>
 
