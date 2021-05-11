@@ -59,7 +59,8 @@ There are also several different phases in each stage:
 
 - **Compute Phase:** where the actual processing takes place, such as evaluating SQL functions or expressions. 
 - **Wait Phase:** the engine is waiting for either the slots to become available or for a previous stage to start writing results that it can begin consuming. 
-- **Read Phase:** the slot is reading data either from Colossus (in the case of leaf nodes) or from shuffle (in the case of mixer nodes). The final stage is the write phase, where data is written, either to the next stage, or shuffle, which is the output returned to the developer.
+- **Read Phase:** the slot is reading data either from Colossus (in the case of leaf nodes) or from shuffle (in the case of mixer nodes). 
+- **Write phase:** where data is written, either to the next stage, or shuffle, which is the output returned to the developer.
 
 A well-tuned query typically spends most of its time in the compute phase, and an average compute time close to max compute time indicates an even distribution of data coming out of the previous stage.
 
@@ -96,7 +97,6 @@ In the diagram, we have three columnar files in the first table, and we've used 
 #### Stage 2: Co-locate Data from the Second Table
 
 This is effectively the same work as the first stage, but we're processing the other table we'll be joining data against.  The important thing to note here is that we need to use the same hashing function and bucket, as we're aligning data.  In the diagram above, the second table has four input files (and thus four worker), and the data is written into a second set of shuffle partitions.
-
 
 #### Stage 3: Consume the Aligned data and Perform the Join
 

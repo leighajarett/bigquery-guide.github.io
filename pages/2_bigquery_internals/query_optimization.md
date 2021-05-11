@@ -7,8 +7,8 @@ order: 4
 description: Now that we have some pointers on optizing storage, lets walk through how we can also optimize queries
 next_page_title: 
 next_page_permalink: 
-prev_page_title: 
-prev_page_permalink: 
+prev_page_title: Storage Optimization
+prev_page_permalink: /internals/storage_optimization/
 ---
 
 ## General Optimization Tips
