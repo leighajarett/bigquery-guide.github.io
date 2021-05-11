@@ -30,16 +30,19 @@ In BigQuery, you can date shard a table by having multiple tables with the same 
 <a href="https://mark-mccracken.medium.com/bigquery-date-sharding-vs-date-partitioning-cee3754f7900" class="button">Date Sharding vs Partitioning (Blog)</a>
 
 ## Denormalizing Data
+Denormalization is a strategy used to improve the performance on relational datasets. When data is normalized, information is stored in separate logical tables. For example, information about a user might be stored in a separate user table. But with denormalization we colocate data even if it means repeating some information. For example, attributes that might be saved in the user table (name, adress) are instead also incorporate into the fact table (like an transaction table. This can improve performance because we don't need to read data from two different tables and join them. Because storage is so cheap, the cost of repeating this information is usually minimal. 
 
-Denormalization is a strategy used to improve the performance on relational datasets. When data is normalized, information is stored in separate logical tables. For example, information about a user might be stored in a separate user table. But with denormalization we colocate data even if it means repeating some information. For example, attributes that might be saved in the user table (name, adress) are instead also incorporate into the fact table (like an orders table). This can improve performance because we don't need to read data from two different tables and join them. Because storage is so cheap, the cost of repeating this information is usually minimal. 
+Additionally, structs and repeated records make it easy to structure this information efficiently BigQuery. Back to our retail example - lets say in addition to storing information about our customer in our transactions table, we also add in information about the products they purchased. However, one transaction could have many products. If we used "flat denormalization", we would have one for row for each item in the transaction, even though you only have a single order. This would require an aggregation to perform analysis. Instead we can use a repeated record to store the data in it's more natural form (an array) and avoid the unnecessary aggregation. For example using the ARRAY_LENGTH() function to understand the number of items per order.
 
-Additionally, structs and repeated records make it easy to structure this information efficiently BigQuery. For example, if you performed "flat denormalization", you would have two rows (one for each item) even though you only have a single order. This would require an aggregation to perform analysis. Instead by using nesting, you can store the data in it's more natural form (an array) and avoid the unnecessary aggregation. For example using the ARRAY_LENGTH() function to understand the number of items per order.
+![img](/assets/images/denorm.png){: style="max-width:70%; float:center;" }
 
 Although denormalizing data can improve efficiency, it may involve re-shaping many tables which can disrupt workflows so it's easiest to start with other improvements like partitions and clusters. More so, de-normalizing isn't a good fit for data where the dimensional values are often changing (for example, if users are often updating their addresses) because that would require updating multiple rows in BigQuery.
 
 
 
-<a href="https://cloud.google.com/architecture/dw2bq/dw-bq-performance-optimization#denormalization" class="button">Denormalization (docs)</a>
+<a href="https://cloud.google.com/architecture/dw2bq/dw-bq-performance-optimization#denormalization" class="button">Denormalization (Docs)</a>
+<a href="https://cloud.google.com/architecture/bigquery-data-warehouse#denormalization" class="button">Designing Denormalized Schema (Docs)</a>
+<a href="https://cloud.google.com/blog/topics/developers-practitioners/bigquery-explained-working-joins-nested-repeated-data" class="button">Working with Nested and Repeated Data(Blog)</a>
 
 ## Take Advantage of Long-term Storage
 
@@ -47,7 +50,7 @@ Rather than exporting older data that you may not be regularly querying to anoth
 
 Each partition of a partitioned table is considered separately for long-term storage pricing. If a partition hasn't been modified in the last 90 days, the data in that partition is considered long term storage and is charged at the discounted price.
 
-<a href="https://cloud.google.com/bigquery/docs/best-practices-storage#take_advantage_of_long-term_storage" class="button">Take Advantage of Long Term Storage (docs)</a>
+<a href="https://cloud.google.com/bigquery/docs/best-practices-storage#take_advantage_of_long-term_storage" class="button">Take Advantage of Long Term Storage (Docs)</a>
 
 
 

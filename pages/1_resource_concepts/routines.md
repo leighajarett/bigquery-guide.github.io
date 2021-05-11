@@ -45,8 +45,9 @@ A UDF is a function that is created using either SQL or Javascript, it takes arg
 - An authorized UDF is a UDF that is authorized to access a particular dataset: the UDF can query tables in the dataset, even if the user who calls the UDF does not have access to those tables, meaning you can share results with particular users or groups without giving those users or groups access to the underlying tables
 
 <a href="https://cloud.google.com/bigquery/docs/reference/standard-sql/user-defined-functions?utm_source=youtube&utm_medium=unpaidsoc&utm_campaign=CDR_ali_analytics_c3dtglwrycs_BigQuerySpotlight_111220&utm_content=description" class="button">UDFs (docs)</a>
-<a href="https://hoffa.medium.com/new-in-bigquery-persistent-udfs-c9ea4100fd83" class="button">Examples of UDFs</a>
+<a href="https://hoffa.medium.com/new-in-bigquery-persistent-udfs-c9ea4100fd83" class="button">Examples of UDFs (blog)</a>
 <a href="https://www.youtube.com/watch?v=c3dtgLWRycs" class="button">UDFs (vid)</a>
+<a href="https://github.com/GoogleCloudPlatform/bigquery-utils/blob/master/udfs/README.md" class="button">Community UDFs (GitHub)</a>
 
 
 ### [Stored] Procedures 
