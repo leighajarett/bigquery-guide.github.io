@@ -38,8 +38,6 @@ Additionally, structs and repeated records make it easy to structure this inform
 
 Although denormalizing data can improve efficiency, it may involve re-shaping many tables which can disrupt workflows so it's easiest to start with other improvements like partitions and clusters. More so, de-normalizing isn't a good fit for data where the dimensional values are often changing (for example, if users are often updating their addresses) because that would require updating multiple rows in BigQuery.
 
-
-
 <a href="https://cloud.google.com/architecture/dw2bq/dw-bq-performance-optimization#denormalization" class="button">Denormalization (Docs)</a>
 <a href="https://cloud.google.com/architecture/bigquery-data-warehouse#denormalization" class="button">Designing Denormalized Schema (Docs)</a>
 <a href="https://cloud.google.com/blog/topics/developers-practitioners/bigquery-explained-working-joins-nested-repeated-data" class="button">Working with Nested and Repeated Data(Blog)</a>
