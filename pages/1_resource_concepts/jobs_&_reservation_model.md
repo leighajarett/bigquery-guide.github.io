@@ -119,3 +119,4 @@ BigQuery BI Engine is an in-memory analysis service that intellignetly caches's 
 <a href="https://cloud.google.com/bi-engine/docs/introduction" class="button">What is BI Engine? (docs)</a>
 <a href="https://cloud.google.com/bi-engine/docs/reserving-capacity" class="button">Reserving BI Engine Capacity (docs)</a>
 
+<!-- saving costs with longer commitments: https://gcloud.devoteam.com/blog/bigquery-flex-slots-pricing-a-programmatic-approach -->
